@@ -1,4 +1,4 @@
-package algorithms_1.deques; // Remove this line before submission
+package algorithms1.deques; // Remove this line before submission
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;

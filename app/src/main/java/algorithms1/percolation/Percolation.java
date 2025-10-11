@@ -1,4 +1,4 @@
-package algorithms_1.percolation; // Remove this line before submission
+package algorithms1.percolation; // Remove this line before submission
 
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
