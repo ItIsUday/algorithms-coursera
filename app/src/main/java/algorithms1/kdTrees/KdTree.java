@@ -1,7 +1,8 @@
-package algorithms1.kdTrees;
+package algorithms1.kdTrees; // Remove this line before submission
 
 import edu.princeton.cs.algs4.Point2D;
 import edu.princeton.cs.algs4.RectHV;
+import edu.princeton.cs.algs4.StdDraw;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,17 +36,38 @@ public class KdTree {
     }
 
     public void draw() {
-        draw(root);
+        draw(root, new RectHV(0, 0, 1, 1));
     }
 
-    private void draw(Node node) {
+    private void draw(Node node, RectHV rect) {
         if (node == null) {
             return;
         }
+        // Draw the splitting axis for the current node.
+        StdDraw.setPenRadius(0.002);
+        if (node.level % 2 == 0) {
+            StdDraw.setPenColor(StdDraw.RED);
+            StdDraw.line(node.point.x(), rect.ymin(), node.point.x(), rect.ymax());
+        } else {
+            StdDraw.setPenColor(StdDraw.BLUE);
+            StdDraw.line(rect.xmin(), node.point.y(), rect.xmax(), node.point.y());
+        }
 
-        node.point.draw();
-        draw(node.left);
-        draw(node.right);
+    StdDraw.setPenRadius(0.01);
+    StdDraw.setPenColor(StdDraw.BLACK);
+    node.point.draw();
+
+    double labelOffset = 0.01;
+    StdDraw.text(node.point.x() + labelOffset, node.point.y() + labelOffset,
+        String.format("(%.3f, %.3f)", node.point.x(), node.point.y()));
+
+        if (node.level % 2 == 0) {
+            draw(node.left, new RectHV(rect.xmin(), rect.ymin(), node.point.x(), rect.ymax()));
+            draw(node.right, new RectHV(node.point.x(), rect.ymin(), rect.xmax(), rect.ymax()));
+        } else {
+            draw(node.left, new RectHV(rect.xmin(), rect.ymin(), rect.xmax(), node.point.y()));
+            draw(node.right, new RectHV(rect.xmin(), node.point.y(), rect.xmax(), rect.ymax()));
+        }
     }
 
     public boolean contains(Point2D p) {
